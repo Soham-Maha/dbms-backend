@@ -31,4 +31,5 @@ dump.txt
 main
 *templ.go
 .DS_Store
+/node_modules
 
