@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 app.get("/ping", (_, res) => {
   res.json({ status: "ok", message: "pong" });
@@ -13,3 +13,4 @@ app.get("/ping", (_, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+
