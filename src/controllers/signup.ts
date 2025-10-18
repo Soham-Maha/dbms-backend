@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken';
 import pool from "../config/db";
 
 export const signup = async (req: Request, res: Response) => {
@@ -21,8 +22,15 @@ export const signup = async (req: Request, res: Response) => {
       [email, hashedPassword, name, phone],
     );
 
+    const token = jwt.sign(
+      { userId: result.rows[0].id, email: result.rows[0].email },
+      process.env.JWT_SECRET!,
+      { expiresIn: '1h' },
+    );
+
     res.status(201).json({
       message: "User registered successfully",
+      token,
       user: result.rows[0],
     });
   } catch (error) {
