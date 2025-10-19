@@ -1,7 +1,5 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
-import { signup } from "./controllers/signup";
-import { login } from "./controllers/login";
 import router from "./routes";
 
 dotenv.config();
