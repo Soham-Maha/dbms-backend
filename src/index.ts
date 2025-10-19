@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import { signup } from "./controllers/signup";
 import { login } from "./controllers/login";
+import router from "./routes";
 
 dotenv.config();
 
@@ -14,8 +15,7 @@ app.get("/ping", (_, res) => {
   res.json({ status: "ok", message: "pong" });
 });
 
-app.post("/signup", signup);
-app.post("/login", login);
+app.use(router)
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
