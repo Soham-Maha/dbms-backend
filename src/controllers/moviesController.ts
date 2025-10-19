@@ -79,3 +79,22 @@ export const createMovie = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+export const deleteMovie = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query(
+      `DELETE FROM movies WHERE id = $1 RETURNING *`,
+      [id],
+    );
+
+    if (result.rowCount === 0) {
+      res.status(401).json({ error: "Movie not found" });
+    } else {
+      res.json({ message: "Movie deleted successfully" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
