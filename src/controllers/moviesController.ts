@@ -43,3 +43,39 @@ export const getMovies = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+export const createMovie = async (req: Request, res: Response) => {
+  try {
+    const {
+      title,
+      description,
+      duration,
+      language,
+      genre,
+      release_date,
+      rating,
+      poster_url,
+      trailer_url,
+    } = req.body;
+    const result = await pool.query(
+      `INSERT INTO movies (title, description, duration, language, genre, release_date, rating, poster_url, trailer_url)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`,
+      [
+        title,
+        description,
+        duration,
+        language,
+        genre,
+        release_date,
+        rating,
+        poster_url,
+        trailer_url,
+      ],
+    );
+
+    res.status(201).json({ movie: result.rows[0] });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
