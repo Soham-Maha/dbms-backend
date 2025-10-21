@@ -9,6 +9,7 @@ import {
 } from "../controllers/moviesController";
 import { authenticate } from "../middleware/auth";
 import { cancelBooking, confirmBooking, createBooking, getUserBookings } from "../controllers/bookingController";
+import { getShowById, getShowsByMovie } from "../controllers/showController";
 
 const router = Router();
 
@@ -26,5 +27,9 @@ router.post('/bookings', authenticate, createBooking);
 router.post('/bookings/:bookingId/confirm', authenticate, confirmBooking);
 router.get('/bookings', authenticate, getUserBookings);
 router.delete('/bookings/:bookingId', authenticate, cancelBooking);
+
+//shows
+router.get('/movies/:movieId/shows', getShowsByMovie);
+router.get('/shows/:id', getShowById);
 
 export default router;
